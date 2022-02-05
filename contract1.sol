@@ -29,9 +29,12 @@ contract app {
     }
     
     uint num_ad = 0;
-    address private owner;
+    address public owner;
 
     string[] public all_hashes;
+    address[] public addresses;
+    
+    mapping(email => address) public emails;
 
     mapping(address => video[]) public videos;
     mapping(address => user) public users;
@@ -40,7 +43,7 @@ contract app {
     mapping(string => uint) public likes;
 
     constructor(){
-                
+        owner = msg.sender;
     }
 
     modifier onlyOwner {
@@ -53,7 +56,8 @@ contract app {
        
        uint _num_liked = 0;
        string[] public _liked;
-
+       emails[_email] = msg.sender;
+     
        users[msg.sender] = user(_username,_email,num,"",private_address,secret_api,public_api,_num_liked,_liked);
        ad[num_ad++] = msg.sender;
        
