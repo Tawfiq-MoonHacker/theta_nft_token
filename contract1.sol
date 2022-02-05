@@ -52,7 +52,7 @@ contract app {
        uint num = 0;
        
        uint _num_liked = 0;
-       mapping(uint => string) public _liked;
+       string[] public _liked;
 
        users[msg.sender] = user(_username,_email,num,"",private_address,secret_api,public_api,_num_liked,_liked);
        ad[num_ad++] = msg.sender;
