@@ -25,11 +25,13 @@ contract app {
         string public_api;
         
         uint num_liked;
-        mapping(uint => string) public liked;
+        string[] public liked;
     }
     
     uint num_ad = 0;
     address private owner;
+
+    string[] public all_hashes;
 
     mapping(address => video[]) public videos;
     mapping(address => user) public users;
@@ -98,6 +100,8 @@ contract app {
        users[msg.sender].num++;
        likes[_hash] = 0;
 
+       all_hashes.push(_hash);
+
    }
 
    function delete_video(uint  _num) public {
@@ -124,7 +128,7 @@ contract app {
 
    function add_like(string memory _hash) public {
        likes[_hash]++;
-       users[msg.sender].liked[users[msg.sender].num_liked++] = _hash;
+       users[msg.sender].liked.push(_hash);
    }
    
    function remove_like(string _hash) public{
@@ -132,12 +136,19 @@ contract app {
 
        for (uint i=0; i<user[msg.sender].num_liked; i++) {
            if (users[msg.sender].liked[i] == _hash){
-               delete(users[msg.sender].liked[i]);
+               users[msg.sender].liked.remove(_hash);
                users[msg.sender].num_liked--;
            }
-
        }
 
+   }
+
+   function get_allvideos() public view returns(string[] memory,string[] memory,uint[] memory){
+       uint[] all_likes;
+       for(uint i=0;i<all_hashes.length;i++){
+           all_likes.push(likes[all_hashes[i]);
+       }
+       return all_hashes,users[msg.sender].liked,all_likes;
    }
 
 }
