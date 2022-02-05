@@ -132,12 +132,12 @@ contract app {
    }
    
    function remove_like(string _hash) public{
-       likes[_hash]--;
 
        for (uint i=0; i<user[msg.sender].num_liked; i++) {
            if (users[msg.sender].liked[i] == _hash){
                users[msg.sender].liked.remove(_hash);
                users[msg.sender].num_liked--;
+               likes[_hash]--;
            }
        }
 
